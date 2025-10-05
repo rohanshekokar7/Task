@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Illustrations - Unsplash</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom Styles for a more polished look */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #111111;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .sidebar {
+            background-color: #F5F5F5;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .icon-link.active,
+        .icon-link:hover {
+            background-color: #E5E5E5;
+            color: #111111;
+        }
+
+        .icon-link.active svg {
+           stroke: #111111;
+        }
+        
+        #sidebar-illustrations-link.active svg {
+            fill: #111111;
+        }
+        
+        .icon-link svg {
+            stroke: #767676;
+            fill: none;
+        }
+
+        /* Tooltip styles */
+        .icon-link {
+            position: relative;
+        }
+
+        .icon-link::after {
+            content: attr(aria-label);
+            position: absolute;
+            left: 100%;
+            top: 50%;
+            transform: translateY(-50%) translateX(10px);
+            background-color: #111111;
+            color: #ffffff;
+            padding: 6px 12px;
+            border-radius: 4px;
+            white-space: nowrap;
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .dark .icon-link::after {
+             background-color: #f9fafb;
+             color: #111827;
+        }
+
+        .icon-link:hover::after {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(-50%) translateX(16px);
+        }
+
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tabs {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .tab {
+            color: #767676;
+            white-space: nowrap;
+            position: relative; /* Necessary for the underline */
+            padding-bottom: 0.5rem; /* Add some space for the underline */
+        }
+        
+        .tab.active, .tab:hover {
+            color: #111111;
+        }
+        
+        /* New Animated Underline */
+        .tab::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: 60%; 
+            height: 3px;
+            background-color: #111111;
+            transform: translateX(-50%) scaleX(0);
+            transform-origin: center;
+            transition: transform 0.3s ease;
+        }
+
+        .tab.active::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+
+        /* Masonry Layout */
+        .masonry {
+            column-count: 1;
+            column-gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .masonry {
+                column-count: 2;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .masonry {
+                column-count: 3;
+            }
+        }
+
+        .photo-card {
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 1.5rem;
+            break-inside: avoid;
+            position: relative;
+            cursor: pointer;
+        }
+
+        /* New mobile-first styles for the card */
+        @media (max-width: 767px) {
+            .masonry {
+                column-count: 1;
+                gap: 0;
+            }
+            .photo-card {
+                display: flex;
+                flex-direction: column;
+                border-radius: 0;
+                margin: 0 0 1.5rem 0;
+                padding-bottom: 1rem;
+                cursor: default;
+                border: none; /* Remove border */
+                box-shadow: none; /* Remove box-shadow */
+                overflow: hidden;
+                transition: none;
+            }
+            .photo-card:hover {
+                box-shadow: none;
+                transform: none;
+            }
+            .dark .photo-card {
+                border-color: transparent;
+                background-color: transparent;
+            }
+            .photo-card .photo-header {
+                display: flex;
+                align-items: center;
+                padding: 0.75rem 1rem;
+            }
+            .photo-card .photo-header .avatar {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                border: none;
+            }
+            .photo-card .photo-header .author {
+                margin-left: 0.75rem;
+            }
+            .photo-card .photo-header .name {
+                font-weight: 600;
+                font-size: 0.875rem;
+            }
+            .dark .photo-card .photo-header .name {
+                color: #f9fafb;
+            }
+            .photo-card .photo-header .meta {
+                font-size: 0.75rem;
+                color: #767676;
+            }
+            .dark .photo-card .photo-header .meta {
+                color: #9ca3af;
+            }
+            .photo-card .photo-actions {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0.5rem 1rem 0;
+            }
+            .photo-card .photo-actions .control {
+                background: none;
+                padding: 0.5rem;
+                box-shadow: none;
+                margin-left: -0.5rem; /* To align with padding */
+                transition: transform 0.2s ease;
+            }
+             .photo-card .photo-actions .control:hover {
+                transform: scale(1.1);
+            }
+            .photo-card .photo-actions .control svg {
+                stroke: #767676;
+                fill: none;
+            }
+            .dark .photo-card .photo-actions .control svg {
+                stroke: #9ca3af;
+            }
+            .photo-card .photo-actions .control.like-btn.liked svg {
+                stroke: #ef4444;
+                fill: #ef4444;
+            }
+            .photo-card .photo-actions .control.download-btn {
+                margin-left: 0;
+                margin-right: -0.5rem;
+            }
+        }
+        
+        .photo-card .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            color: white;
+            padding: 1rem;
+        }
+
+        .photo-card:hover .overlay {
+            opacity: 1;
+        }
+        
+        .overlay .actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .overlay .control {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #111;
+            border-radius: 0.25rem;
+            padding: 0.5rem;
+            margin-left: 0.5rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .overlay .control:hover {
+             background-color: white;
+        }
+
+        .overlay .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid white;
+        }
+
+        /* Card Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .photo-card {
+            animation: fadeIn 0.5s ease-out forwards;
+            opacity: 0; /* Start hidden */
+        }
+
+        /* Mobile Nav */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .mobile-nav.is-open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .mobile-nav-menu {
+            position: absolute;
+            top: 4rem; /* Below header */
+            right: 1rem;
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transform: translateY(-10px);
+            transition: transform 0.3s ease;
+            width: 200px;
+        }
+        .mobile-nav.is-open .mobile-nav-menu {
+            transform: translateY(0);
+        }
+        .mobile-nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: #374151;
+            font-weight: 500;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .mobile-nav-link:last-child {
+            border-bottom: none;
+        }
+        .mobile-nav-link:hover {
+            background-color: #f9fafb;
+        }
+        .mobile-nav-link svg {
+            margin-right: 0.75rem;
+            stroke: #4b5563;
+        }
+        .dark .mobile-nav-menu {
+            background-color: #1f2937;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        .dark .mobile-nav-link {
+            color: #d1d5db;
+            border-color: #374151;
+        }
+        .dark .mobile-nav-link:hover {
+            background-color: #374151;
+        }
+        .dark .mobile-nav-link svg {
+            stroke: #9ca3af;
+        }
+        
+        .to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: #111;
+            color: white;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 100;
+            opacity: 0;
+            transform: translateY(1rem);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+        }
+
+        .to-top.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        /* Dark Mode Styles */
+        html.dark {
+            background-color: #111827;
+        }
+        html.dark body{
+            background-color: #111827;
+            color: #d1d5db;
+        }
+        .dark .sidebar {
+            background-color: #1f2937;
+        }
+        .dark .site-header, .dark .mobile-header-bg {
+             background-color: #111827;
+             border-color: #374151;
+        }
+        .dark .icon-link.active, .dark .icon-link:hover {
+            background-color: #374151;
+            color: #f9fafb;
+        }
+        .dark .icon-link.active svg, .dark .icon-link:hover svg {
+            stroke: #f9fafb;
+        }
+         .dark .border-gray-300 {
+            border-color: #4b5563;
+         }
+        .dark .search {
+            background-color: #374151;
+            border-color: #4b5563;
+        }
+        .dark .link, .dark .tab, .dark .mobile-logo + .mobile-actions button {
+            color: #9ca3af;
+        }
+         .dark .link:hover, .dark .tab:hover, .dark .tab.active {
+            color: #f9fafb;
+        }
+        .dark .tab::after {
+            background-color: #f9fafb;
+        }
+        .dark .submit-btn {
+            background-color: #111827;
+            color: #f9fafb;
+            border-color: #4b5563;
+        }
+        .dark .submit-btn:hover {
+            border-color: #f9fafb;
+        }
+        .dark .site-footer {
+             background-color: #0c111c;
+             color: #9ca3af;
+        }
+        .dark .site-footer a {
+             color: #9ca3af;
+        }
+        .dark .site-footer a:hover {
+             color: #f9fafb;
+        }
+        .dark .site-footer h3 {
+             color: #f9fafb;
+        }
+        .dark .site-footer .border-gray-800 {
+            border-color: #1f2937;
+        }
+         .dark .to-top {
+            background-color: #f9fafb;
+            color: #111827;
+         }
+    </style>
+</head>
+<body class="">
+    <div class="flex">
+        <!-- Sidebar -->
+        <aside class="sidebar fixed top-0 left-0 h-screen w-20 flex flex-col items-center py-4 z-20 hidden md:flex" aria-label="Sidebar">
+            <div class="flex flex-col items-center space-y-6">
+                 <a href="index.html" id="sidebar-logo-link" class="block" aria-label="Unsplash home">
+                    <img class="h-12 w-auto" src="https://www.svgrepo.com/show/315538/unsplash.svg" alt="Logo" />
+                </a>
+
+                <div class="border-b border-gray-300 w-10"></div>
+                
+                <ul class="flex flex-col items-center space-y-2">
+                    <li>
+                        <a href="index.html" class="icon-link flex items-center justify-center h-12 w-12 rounded-xl" aria-label="Photos">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" id="sidebar-illustrations-link" class="icon-link active flex items-center justify-center h-12 w-12 rounded-xl" aria-label="Illustrations">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                        </a>
+                    </li>
+                     <li><hr class="w-10 border-gray-300 my-2" /></li>
+                    <li>
+                        <a href="#" class="icon-link flex items-center justify-center h-12 w-12 rounded-xl" aria-label="Collections">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="icon-link flex items-center justify-center h-12 w-12 rounded-xl" aria-label="Downloads History">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Bottom section -->
+            <div class="mt-auto flex flex-col items-center space-y-2 pb-2">
+                <button id="theme-toggle" class="icon-link flex items-center justify-center h-14 w-14 rounded-xl" aria-label="Toggle theme">
+                    <svg id="sun-icon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+                 <a href="login.html" class="icon-link flex items-center justify-center h-14 w-14 rounded-xl" aria-label="Login / Sign up">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="17" y1="11" x2="23" y2="11"></line></svg>
+                </a>
+                <a href="#" class="icon-link flex items-center justify-center h-14 w-14 rounded-xl" aria-label="Menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="w-full md:pl-20">
+            <!-- Header for Desktop and Mobile -->
+            <header class="site-header sticky top-0 bg-white z-10 shadow-sm mobile-header-bg">
+                <!-- Mobile Topbar -->
+                 <div class="md:hidden flex items-center justify-between px-4 h-16 border-b">
+                    <a href="index.html" class="mobile-logo" aria-label="Unsplash home">
+                        <img class="h-8 w-auto" src="https://www.svgrepo.com/show/315538/unsplash.svg" alt="Logo" />
+                    </a>
+                    <div class="mobile-actions flex items-center space-x-2">
+                        <button class="icon-btn p-2 rounded-full hover:bg-gray-100" aria-label="Notifications">
+                           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3a5 5 0 0 0-5 5v3.5c0 .6-.2 1.2-.6 1.6L5 14.5V16h14v-1.5l-1.4-1.4c-.4-.4-.6-1-.6-1.6V8a5 5 0 0 0-5-5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9.5 18a2.5 2.5 0 0 0 5 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                        </button>
+                        <a href="login.html" class="icon-btn p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-100" aria-label="Login / Sign up">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+    </svg>
+</a>
+                        <button class="icon-btn nav-toggle p-2 rounded-full hover:bg-gray-100" aria-label="Menu" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Desktop Header -->
+                <div class="header-inner container mx-auto px-4 hidden md:flex items-center h-20">
+                    <div class="search flex-grow flex items-center bg-gray-100 border border-gray-200 rounded-full px-4 py-2">
+                        <svg class="w-5 h-5 text-gray-400 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        <input class="w-full bg-transparent focus:outline-none" type="search" placeholder="Search photos and illustrations" aria-label="Search" />
+                        <svg class="w-5 h-5 text-gray-400 ml-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                    </div>
+                    <nav class="nav ml-8" aria-label="Primary">
+                        <ul class="nav-list flex items-center space-x-6">
+                            <li><a href="#" class="link text-gray-600 hover:text-black">Unsplash+</a></li>
+                            <li><a href="#" class="submit-btn px-4 py-2 rounded-md font-medium bg-white text-black border border-gray-300 hover:border-black transition-colors duration-300">Submit an image</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                
+                <!-- Illustration Tabs -->
+                <div class="tabs border-b overflow-x-auto">
+                    <div class="tabs-inner container mx-auto px-4 flex items-center h-14 space-x-6">
+                        <button class="tab active py-4 font-medium" data-category="Featured">Featured</button>
+                        <button class="tab py-4" data-category="Wallpapers">Wallpapers</button>
+                        <button class="tab py-4" data-category="3D">3D</button>
+                        <button class="tab py-4" data-category="Flat">Flat</button>
+                        <button class="tab py-4" data-category="Hand Drawn">Hand Drawn</button>
+                        <button class="tab py-4" data-category="Icons">Icons</button>
+                        <button class="tab py-4" data-category="Line Art">Line Art</button>
+                        <button class="tab py-4" data-category="Patterns">Patterns</button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Mobile Navigation Menu -->
+            <div id="mobile-nav" class="mobile-nav">
+                <div class="mobile-nav-menu">
+                    <a href="index.html" class="mobile-nav-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                        <span>Photos</span>
+                    </a>
+                    <a href="illustration.html" class="mobile-nav-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                        <span>Illustrations</span>
+                    </a>
+                </div>
+            </div>
+
+            <main>
+                <section class="feed py-6" aria-label="Image feed">
+                    <div class="container mx-auto px-0">
+                        <div class="masonry" id="masonry-grid">
+                            <!-- Illustrations will be dynamically inserted here by JavaScript -->
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <button class="to-top" aria-label="Back to top">↑</button>
+
+             <footer class="site-footer bg-gray-900 text-gray-400">
+                <div class="container mx-auto px-6 py-12">
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+                        <!-- Logo and Description -->
+                        <div class="md:col-span-2">
+                            <a href="#" class="flex items-center space-x-3 mb-4">
+                                <!-- Base64 encoded logo -->
+                                <img class="h-12 w-auto" src="data:data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAdYAAABrCAMAAAD951N3AAAAgVBMVEX///8AAAB9fX1hYWH39/etra3j4+MfHx/e3t44ODguLi7x8fHU1NSTk5NTU1NnZ2enp6ehoaGJiYklJSVOTk43NzdHR0d5eXnt7e25ubnY2Nj09PQ9PT3IyMgtLS0VFRWZmZmMjIzLy8twcHC1tbUODg5bW1tCQkIaGhpsbGxSUlLkztr4AAALiUlEQVR4nO2d6WKyOhCGURF3BeqCCy51a7/7v8BjWWdLFNpa4eT9V8xGnpBMJgO1LI2a07FW87Yut9GLaty4o9Fft9CohAzWWspgraUM1lrKYK2lDNZaymCtpQzWWspgraUM1lrKYK2lDNZaymCtpQzWWspgraUM1lrKYK2lDNZaymCtpQzWWspgraUM1lrKYK2l5vewHv66hUYltB7ckV225PGsl2p2USdb9PNkk7J1/aKOefu2p9+vzp7n3dZxfr++wpqBR76nTjYByabPa93DaoH2PeENB/sD1PfqWDfqZAYrkt0xWJ8hgxXLYC0jg/U5MlixDNYyMlifI4MVy2AtI4P1OTJYsQzWMjJYnyODFctgLSOD9Tl6Xaxdje4e0AS63LqMBmsZFcDa0Oj9Xj1NTeadLqPBWkY/hHV4rx5fk7mvy2iwlpHB+hwZrFi9H8ZqD4Lhu3M3XOOWrBuuggJhHbY2DOQBrHGEyfrR+r4yxLciZBGxrgfDMOzSJlYO68DJlVw6NdOnf9YMlYXZJz+rdjpi9xbwcgO3eU3aePQkE/Ae1uXoso1+7LT2acNg+9lo6Xqtc1Je59imZDlW251ss1tvg+Iqh/UArgW3v4MRrvdtKRa1OtL2kXQX8FuEsD3DGc7tAS1Ui3W4IDX6q6/LsLmkg09bkmOBxxLF6tD+HwVp0oZG38K61WX8xtoKu+V2F0vaFbfOYN1v2SOW6lbxCiYBiD5uvTkUwi5nFJ0GayDsEs4jS4N19U/I0UR3gbGOdix9NqaF25VrlfQXTyvG6klVXwNSzkCOeD7DBxZidSxXvqkLHjFqrO6bmL9lK7Ge5BrHYGZFWLufYvp9nFQujNcq6q+xDtpy3TtsJgYdORliARB1nL0qwwdau5VY6fyb36wNiwYdrBhHtxz5SEJY+4r08fOtKo3UKuuvsSpGOFkBgg9VskYjpwQQbaUpOxX00aiw0nUc3oaMVUm10ZhniWzl8IRyv5LqErw8VvVt7vNC7Isy1W0xyp4FgIivWUBwJlBg1TnfGnB2zjr4XZcje3fiMayRIan7/eWxapR3vmKiTuRLiLTa5PsOGau+Qqisg2faZOm9PIh1UmOsx7SMABkvu+tlg9Kd0z3Ew1jzkSBjDR4uKOtgbPj1/02xwZXey4NYv4p9pNYqYt1mvgpY1TJY24NgeQXX0rf+HseaL68iVqW5xJV2MHxYF87AtoPu4QyuOcWwLmqB9aPV9CdsQ5FuXsD+c55Nn8Cm2Qp1ZXq7jq98qzLWYe3yUmbTce/ML2cd7AjFWCt+UcLaExrYX1cf6zwxZlfkKUnfsAOXcp+NDWA7HFFyB168/127dOmTJu6UBx0ek2R8DYXOSjoYGMet/OaX7CrDOo7LHuzJD2Hlse7FfrjpHF8Eg34DdvZgQ5EMC4bVy5PbZP+xsHieBGsXm9EbsB9y2L4n6WBgOQN7Ggy9a3KF0MsTB3gweVXH6sPk2PKIqYT5hSvAOpjNE22Sp4lgfcNnBkM0030EPE9bakMLe6WoTyzp4CMrJb7TTdLEaytuOcEK0w7QhDKpONYOTo88L3HrAdYG9SkiEaw0MmQo/SpgRS7qK62EdBjH2qQ5oDBW/B432vluK46V+NfRNBw/hdDyaFkaYawu+x09aUeeJ24K3t3wo27snOaTcEN9sEiw7lb4R2jdN6qN9Y30Wxfet9DP05X6AB1hFY6fbDgVzHmeuDrkzhQePexOSjoYduN5FPADqLQJ8PbotxnQ8l9trOyzE/A0zYsv4VZ1pk1Xvi1kdEhn4rDfkl0xxwqfafHzDqiapCXY1mv0JvuTiBZh3ZMf0SpRbaxHmgG6fxOskoP2bcSDKmFdO6lX17CEOD/HCo1d8VsnyLOYdrDUf+MlGxUIK52tV3Bn/D2sB01m7TH6D2Fd0AywnxOs2NbJ1D++r5VZ57TcSNAaClmeGOuUNwALLQppB8tnAx9XD5PVhqihBUiL1W+7WrV1ZyPPeFrZ4iVgVXsFr8gugnXJ9ij0d5xY0RFWG+6D5AB42IIUK7TrkM4TaBhpsTqwai3Wb0mLFbrbZ8pU0BfU+JdcLIzVEf12keYrOetebA48KfVYnhgrdEbIIZ9wg5lNhwdlE+GX6l4eK+TVUaZCxmfqiC2MlVokSCcxq/zpLFiOz/LEWGHZMlY4w2VYbdEjHeuaLfQvjxXN3spUyEhJDZDiWLUHoJ6UVQ5ehJ6NJsvzKFYIMDdeBpoDpLfUjfLyWJF3VLmVRObFZ3KxBFYrlAPGIr3rswLB0bFneWKs979zBo0qaJNqQirSierlsSKXjfxskH7M1pgyWG8VqgNZBjyrT8uNdAAp2ixPjBVay7LJBFOgrYYilBC05+WxImeL0g+KFpwUfjms1sAVwnAjjXjWMS03EixgyfLEoMfsChWsmuwguwtF8EsSP/XyWJFFv1O44PEZV3obJbF+Vdq+iDGIPGtHXBdgHtW+FW6CxG+qogHN3xgZ+uKBe/y4vjxWtHVRzHk4eqSX2oPlsX6pu9yzUHD+5IkOd2gxvXVZHu48nEkvVCHHnOzveW83WRBw3GuvjpUE/IjHFiFKkhH8HtZI3YVQNMIqnfXApU/p6kebKWEWxpHoajeefYKmVfoi1ctjxScZ9CQmaiaejDLyP4D1Vj3soE+WVTJ3UIyS8mBugG6LV4xfF9B5Z230XEe3//pYbbzKbRnXLpmHsh+KYQ3Y242x4LCKX3PBDoErXV1tZHEJgTLJo4mMnj1tH3FQR1jtvIl33vB5faxk2NIJy6Y/5y60YljBQoofDdAJcUAi8Qe0CFe0rdypg15w1BNZXWgIcdQksNjguR+uQpH7ugJYBzT9xk3f4l077R75EbwhUQwrWEWxYQZstth/Rd13U2jwDPCvmhA1B8cboZXgnRriQ5LjA839cNo/VQSrdFZ78Ueud2hO+S+AXzGs0KOBOgJcX7Cskbb5AY9LVoSVUF063ZDwwks2SQQ8Ljz+DZx7fFpALk1ZBaxr1Zt8Ullg0SmGFU4KM9ATcJLfR1ckZ7u/DN/DJRuAxcK/Z94yDJfiIWaM9QBrBB0El2mrKljJBkYruEQVtIThtqSTfl1hjeLceADLHQ2l6sq/rIEGQiudCVZwIRpXByuzmpRC/xyrIFY8eOa352/pNdHbVf941kebI2JlVoNayfhAE8V54oZh+/CJ9nfLCmG1dMEVQNg+LLpvvTvXq6L6VZraYnW5Ka98mZopwaqIy8klRfW/Ltb7/8TuS2O81SiKVRlQkmgiZNVpu5arAzu0B1/qy2fze/P2sFpYA/VZVKYJOQgo7GXSz/V9R8iqEdqDqD4yoInI3EhBL2u6ocNKZ/2qYNWHpEZixwDFnYfaZ0E0f9Srw3aoqg75U5Rn4rsVXBSywlaac/58EaoOVivUfK/jZrvyQ4ASPmF14MG5K2Z1VVb6RR2Eit1kqk/QDC2IJh8j1FcKlEfNVgirtT4oizj7wrlnGVd/WxEbMVF83sOzQv4Vr9sgo6cHms9tOdIT37vVJ2O1bMUicAZRr6+AVTi+UKjbFJ/YnS9GjWjDv4Wo/vieJWfDDEXbkBHhNNlx9idrD6yOvYx1Yh5Q/+tZhyMMzegn4YE9HyE9bQAcCjqwmr8lxdm4qODEuv1Tfg3FspaLrIoFC/wM27nwG2VDOhNfSAgVbEE0Ipw9fGLf9uQNNVqdMAZDWOfcjW0/P++iI0Fzom7TESn0lFfn0jP6ABSsfZ3yuVp5/qU/+9LF94Qu/L6GXrO16fd704nvLVnkgjR/26E78n3/4IXKt9juyFnuD7cC9nc/pJ5UuBwdp7deuF4Wh/avdMIfSP/x3h+rQf6476Mn8L8u+5f74P+ll8Fq9JMyWGspg7WWMlhrKYO1ljJYaymDtZYyWGspg7WWMlhrKYO1ljJYaymDtZYyWGupw3Scai5/l6lC+g8qSL+GXqJstgAAAABJRU5ErkJggg==" alt="Unsplash Clone Logo">
+                            </a>
+                            <p class="pr-8">The internet’s source for visuals. Powered by creators everywhere.</p>
+                        </div>
+                        
+                        <!-- Links Columns -->
+                        <div>
+                            <h3 class="font-bold text-white mb-4 tracking-wide">Product</h3>
+                            <ul class="space-y-3">
+                                <li><a href="#" class="hover:text-white transition-colors">Unsplash+</a></li>
+                                <li><a href="#" class="hover:text-white transition-colors">Explore</a></li>
+                                <li><a href="#" class="hover:text-white transition-colors">Community</a></li>
+                                <li><a href="#" class="hover:text-white transition-colors">Visual GPS</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-white mb-4 tracking-wide">Company</h3>
+                            <ul class="space-y-3">
+                                <li><a href="#" class="hover:text-white transition-colors">About</a></li>
+                                <li><a href="#" class="hover:text-white transition-colors">History</a></li>
+                                <li><a href="#" class="hover:text-white transition-colors">Join the team</a></li>
+                                <li><a href="#" class="hover:text-white transition-colors">Press</a></li>
+                                <li><a href="#" class="hover:text-white transition-colors">Contact us</a></li>
+                            </ul>
+                        </div>
+                         <div>
+                            <h3 class="font-bold text-white mb-4 tracking-wide">Popular</h3>
+                            <ul class="space-y-3">
+                                <li><a href="#" class="hover:text-white transition-colors footer-category-link" data-category="Wallpapers">Wallpapers</a></li>
+                                <li><a href="#" class="hover:text-white transition-colors footer-category-link" data-category="Textures">Textures</a></li>
+                                <li><a href="#" class="hover:text-white transition-colors footer-category-link" data-category="Nature">Nature</a></li>
+                                <li><a href="#" class="hover:text-white transition-colors footer-category-link" data-category="Travel">Travel</a></li>
+                                <li><a href="#" class="hover:text-white transition-colors footer-category-link" data-category="People">People</a></li>
+                            </ul>
+                        </div>
+                    </div>
+    
+                    <!-- Social Media and Bottom Bar -->
+                    <div class="mt-12 pt-8 border-t border-gray-800 flex flex-col md:flex-row items-center justify-between">
+                        <div class="flex space-x-6">
+                            <!-- X (Twitter) -->
+                            <a href="https://x.com/unsplash?lang=en" target="_blank" rel="noopener noreferrer" aria-label="X" class="hover:text-white transition-colors">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                                </svg>
+                            </a>
+                            <!-- Facebook -->
+                            <a href="https://www.facebook.com/unsplash/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="hover:text-white transition-colors">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33V21.878A10.003 10.003 0 0022 12z"/>
+                                </svg>
+                            </a>
+                            <!-- Instagram -->
+                            <a href="https://www.instagram.com/unsplash/?hl=en" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="hover:text-white transition-colors">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919 1.266-.057 1.644-.069 4.85-.069zM12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z"/>
+                                </svg>
+                            </a>
+                        </div>
+                        <div class="text-sm mt-8 md:mt-0">
+                            <p>&copy; <span id="footer-year"></span> Unsplash Clone. All rights reserved.</p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- DATA & DOM REFERENCES ---
+            const illustrationData = [
+                // Wallpapers
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1747411330612-9c3b57a7b9e8?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDF8Y3JObVFnZHpyR1l8fGVufDB8fHx8fA%3D%3D", alt: "Wallpaper Illustration", author: { name: "Artist One", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop&w=32&h=32", meta: "Creator" }, category: "Wallpapers" },
+                { imgSrc: "https://images.unsplash.com/vector-1754891284610-b56a3f1f062f?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDd8Y3JObVFnZHpyR1l8fGVufDB8fHx8fA%3D%3D", alt: "Wallpaper Illustration", author: { name: "Artist Two", avatar: "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?q=80&w=1974&auto=format&fit=crop&w=32&h=32", meta: "Creator" }, category: "Wallpapers" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1747611500562-ed10462e9a11?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDE3fGNyTm1RZ2R6ckdZfHxlbnwwfHx8fHw%3D", alt: "Wallpaper Illustration", author: { name: "Artist Three", avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961&auto=format&fit=crop&w=32&h=32", meta: "Creator" }, category: "Wallpapers" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1755900571677-5b3d6484b040?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDE2fGNyTm1RZ2R6ckdZfHxlbnwwfHx8fHw%3D", alt: "Wallpaper Illustration", author: { name: "Artist Four", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1887&auto=format&fit=crop&w=32&h=32", meta: "Creator" }, category: "Wallpapers" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1758228505573-aa401088f0f2?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDIyfGNyTm1RZ2R6ckdZfHxlbnwwfHx8fHw%3D", alt: "Wallpaper Illustration", author: { name: "Artist Five", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&w=32&h=32", meta: "Creator" }, category: "Wallpapers" },
+                { imgSrc: "https://images.unsplash.com/vector-1750195543098-19228b3ebe0d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDE5fGNyTm1RZ2R6ckdZfHxlbnwwfHx8fHw%3D", alt: "Wallpaper Illustration", author: { name: "Artist Six", avatar: "https://images.unsplash.com/photo-1557862921-37829c790f19?q=80&w=2071&auto=format&fit=crop&w=32&h=32", meta: "Creator" }, category: "Wallpapers" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1757533429711-a3952ffed435?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDE4fGNyTm1RZ2R6ckdZfHxlbnwwfHx8fHw%3D", alt: "Wallpaper Illustration", author: { name: "Artist Seven", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop&w=32&h=32", meta: "Creator" }, category: "Wallpapers" },
+                { imgSrc: "https://images.unsplash.com/vector-1749822156144-97e8f4f4d6a2?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDE1fGNyTm1RZ2R6ckdZfHxlbnwwfHx8fHw%3D", alt: "Wallpaper Illustration", author: { name: "Artist Eight", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1887&auto=format&fit=crop&w=32&h=32", meta: "Creator" }, category: "Wallpapers" },
+                { imgSrc: "https://images.unsplash.com/vector-1751292759626-ede3ccf19e29?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDJ8Y3JObVFnZHpyR1l8fGVufDB8fHx8fA%3D%3D", alt: "Wallpaper Illustration", author: { name: "Artist Nine", avatar: "https://images.unsplash.com/photo-1548142813-c348350df52b?q=80&w=1889&auto=format&fit=crop&w=32&h=32", meta: "Creator" }, category: "Wallpapers" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1741120580520-9a14241f4e13?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDE0fGNyTm1RZ2R6ckdZfHxlbnwwfHx8fHw%3D", alt: "Wallpaper Illustration", author: { name: "Artist Ten", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop&w=32&h=32", meta: "Creator" }, category: "Wallpapers" },
+
+                // 3D
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1758693985806-c864a224cd3f?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDJ8d2hJWTMzeUtFODR8fGVufDB8fHx8fA%3D%3D", alt: "3D Illustration", author: { name: "Artist One", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop&w=32&h=32", meta: "Designer" }, category: "3D" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1751775898386-fc0d368131b8?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDN8d2hJWTMzeUtFODR8fGVufDB8fHx8fA%3D%3D", alt: "3D Illustration", author: { name: "Artist Two", avatar: "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?q=80&w=1974&auto=format&fit=crop&w=32&h=32", meta: "Designer" }, category: "3D" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1747934443161-3fb909900bd7?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDd8d2hJWTMzeUtFODR8fGVufDB8fHx8fA%3D%3D", alt: "3D Illustration", author: { name: "Artist Three", avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961&auto=format&fit=crop&w=32&h=32", meta: "Designer" }, category: "3D" },
+                { imgSrc: "https://images.unsplash.com/vector-1750195517984-fddfbec4b8ea?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDl8d2hJWTMzeUtFODR8fGVufDB8fHx8fA%3D%3D", alt: "3D Illustration", author: { name: "Artist Four", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1887&auto=format&fit=crop&w=32&h=32", meta: "Designer" }, category: "3D" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1751570134401-24ac9ca5c69d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDE2fHdoSVkzM3lLRTg0fHxlbnwwfHx8fHw%3D", alt: "3D Illustration", author: { name: "Artist Five", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&w=32&h=32", meta: "Designer" }, category: "3D" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1756308568390-6c106858f97d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDE0fHdoSVkzM3lLRTg0fHxlbnwwfHx8fHw%3D", alt: "3D Illustration", author: { name: "Artist Six", avatar: "https://images.unsplash.com/photo-1557862921-37829c790f19?q=80&w=2071&auto=format&fit=crop&w=32&h=32", meta: "Designer" }, category: "3D" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1758795768073-f1332aaa0714?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDE5fHdoSVkzM3lLRTg0fHxlbnwwfHx8fHw%3D", alt: "3D Illustration", author: { name: "Artist Seven", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop&w=32&h=32", meta: "Designer" }, category: "3D" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1758131852765-0df2e9f53123?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDM5fHdoSVkzM3lLRTg0fHxlbnwwfHx8fHw%3D", alt: "3D Illustration", author: { name: "Artist Eight", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1887&auto=format&fit=crop&w=32&h=32", meta: "Designer" }, category: "3D" },
+                { imgSrc: "https://images.unsplash.com/vector-1757946405607-8de3159afba9?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQ0fHdoSVkzM3lLRTg0fHxlbnwwfHx8fHw%3D", alt: "3D Illustration", author: { name: "Artist Nine", avatar: "https://images.unsplash.com/photo-1548142813-c348350df52b?q=80&w=1889&auto=format&fit=crop&w=32&h=32", meta: "Designer" }, category: "3D" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1752904185744-333f4a021387?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDUwfHdoSVkzM3lLRTg0fHxlbnwwfHx8fHw%3D", alt: "3D Illustration", author: { name: "Artist Ten", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop&w=32&h=32", meta: "Designer" }, category: "3D" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1751696000150-7631b25dc0c7?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDU5fHdoSVkzM3lLRTg0fHxlbnwwfHx8fHw%3D", alt: "3D Illustration", author: { name: "Artist Eleven", avatar: "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?q=80&w=1974&auto=format&fit=crop&w=32&h=32", meta: "Designer" }, category: "3D" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1756994319146-7ef4e5caf8d8?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDkwfHdoSVkzM3lLRTg0fHxlbnwwfHx8fHw%3D", alt: "3D Illustration", author: { name: "Artist Twelve", avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961&auto=format&fit=crop&w=32&h=32", meta: "Designer" }, category: "3D" },
+                
+                // Flat
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1758591438339-3925777f97c7?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDF8cElGN2w1X2hneGd8fGVufDB8fHx8fA%3D%3D", alt: "Flat Illustration", author: { name: "Artist One", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop&w=32&h=32", meta: "Illustrator" }, category: "Flat" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1758326269760-0aefcf574f61?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDEwfHBJRjdsNV9oZ3hnfHxlbnwwfHx8fHw%3D", alt: "Flat Illustration", author: { name: "Artist Two", avatar: "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?q=80&w=1974&auto=format&fit=crop&w=32&h=32", meta: "Illustrator" }, category: "Flat" },
+                { imgSrc: "https://images.unsplash.com/vector-1758709096350-99f690777c3f?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDd8cElGN2w1X2hneGd8fGVufDB8fHx8fA%3D%3D", alt: "Flat Illustration", author: { name: "Artist Three", avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961&auto=format&fit=crop&w=32&h=32", meta: "Illustrator" }, category: "Flat" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1756125510788-50dd27b72360?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDZ8cElGN2w1X2hneGd8fGVufDB8fHx8fA%3D%3D", alt: "Flat Illustration", author: { name: "Artist Four", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1887&auto=format&fit=crop&w=32&h=32", meta: "Illustrator" }, category: "Flat" },
+                { imgSrc: "https://images.unsplash.com/vector-1746438895545-ca74238f2a9b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDEzfHBJRjdsNV9oZ3hnfHxlbnwwfHx8fHw%3D", alt: "Flat Illustration", author: { name: "Artist Five", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&w=32&h=32", meta: "Illustrator" }, category: "Flat" },
+                { imgSrc: "https://images.unsplash.com/vector-1742542556398-b5055c8ae4be?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDIwfHBJRjdsNV9oZ3hnfHxlbnwwfHx8fHw%3D", alt: "Flat Illustration", author: { name: "Artist Six", avatar: "https://images.unsplash.com/photo-1557862921-37829c790f19?q=80&w=2071&auto=format&fit=crop&w=32&h=32", meta: "Illustrator" }, category: "Flat" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1718219041160-1bb185abc731?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI1fHBJRjdsNV9oZ3hnfHxlbnwwfHx8fHw%3D", alt: "Flat Illustration", author: { name: "Artist Seven", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop&w=32&h=32", meta: "Illustrator" }, category: "Flat" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1731660406144-6a3fe8e15ac2?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDMxfHBJRjdsNV9oZ3hnfHxlbnwwfHx8fHw%3D", alt: "Flat Illustration", author: { name: "Artist Eight", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1887&auto=format&fit=crop&w=32&h=32", meta: "Illustrator" }, category: "Flat" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1739859845154-0e0c6fc92ea0?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI3fHBJRjdsNV9oZ3hnfHxlbnwwfHx8fHw%3D", alt: "Flat Illustration", author: { name: "Artist Nine", avatar: "https://images.unsplash.com/photo-1548142813-c348350df52b?q=80&w=1889&auto=format&fit=crop&w=32&h=32", meta: "Illustrator" }, category: "Flat" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1745575681436-f09bfea65e47?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDMzfHBJRjdsNV9oZ3hnfHxlbnwwfHx8fHw%3D", alt: "Flat Illustration", author: { name: "Artist Ten", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop&w=32&h=32", meta: "Illustrator" }, category: "Flat" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1757929708111-dccd1b9e638e?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQ4fHBJRjdsNV9oZ3hnfHxlbnwwfHx8fHw%3D", alt: "Flat Illustration", author: { name: "Artist Eleven", avatar: "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?q=80&w=1974&auto=format&fit=crop&w=32&h=32", meta: "Illustrator" }, category: "Flat" },
+                
+                // Hand Drawn
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1738679834693-8d41f2598b16?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDV8dHRoZHdmTlBDY3d8fGVufDB8fHx8fA%3D%3D", alt: "Hand Drawn Illustration", author: { name: "Artist One", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop&w=32&h=32", meta: "Artist" }, category: "Hand Drawn" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1756165964049-1827637bc880?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDR8dHRoZHdmTlBDY3d8fGVufDB8fHx8fA%3D%3D", alt: "Hand Drawn Illustration", author: { name: "Artist Two", avatar: "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?q=80&w=1974&auto=format&fit=crop&w=32&h=32", meta: "Artist" }, category: "Hand Drawn" },
+                { imgSrc: "https://images.unsplash.com/vector-1746476937137-9a51019915ad?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDZ8dHRoZHdmTlBDY3d8fGVufDB8fHx8fA%3D%3D", alt: "Hand Drawn Illustration", author: { name: "Artist Three", avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961&auto=format&fit=crop&w=32&h=32", meta: "Artist" }, category: "Hand Drawn" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1741271305248-62f941f2cd47?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDd8dHRoZHdmTlBDY3d8fGVufDB8fHx8fA%3D%3D", alt: "Hand Drawn Illustration", author: { name: "Artist Four", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1887&auto=format&fit=crop&w=32&h=32", meta: "Artist" }, category: "Hand Drawn" },
+                { imgSrc: "https://images.unsplash.com/vector-1738242272679-a2c1fd4826c3?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDEzfHR0aGR3Zk5QQ2N3fHxlbnwwfHx8fHw%3D", alt: "Hand Drawn Illustration", author: { name: "Artist Five", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&w=32&h=32", meta: "Artist" }, category: "Hand Drawn" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1742890193139-9a5e94276e83?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDE4fHR0aGR3Zk5QQ2N3fHxlbnwwfHx8fHw%3D", alt: "Hand Drawn Illustration", author: { name: "Artist Six", avatar: "https://images.unsplash.com/photo-1557862921-37829c790f19?q=80&w=2071&auto=format&fit=crop&w=32&h=32", meta: "Artist" }, category: "Hand Drawn" },
+                { imgSrc: "https://images.unsplash.com/vector-1755770341224-8ec3bf8ed320?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI2fHR0aGR3Zk5QQ2N3fHxlbnwwfHx8fHw%3D", alt: "Hand Drawn Illustration", author: { name: "Artist Seven", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop&w=32&h=32", meta: "Artist" }, category: "Hand Drawn" },
+                { imgSrc: "https://images.unsplash.com/vector-1745938444184-b33a96093bf9?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDM2fHR0aGR3Zk5QQ2N3fHxlbnwwfHx8fHw%3D", alt: "Hand Drawn Illustration", author: { name: "Artist Eight", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1887&auto=format&fit=crop&w=32&h=32", meta: "Artist" }, category: "Hand Drawn" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1741581255362-e20ce0c5b604?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDM0fHR0aGR3Zk5QQ2N3fHxlbnwwfHx8fHw%3D", alt: "Hand Drawn Illustration", author: { name: "Artist Nine", avatar: "https://images.unsplash.com/photo-1548142813-c348350df52b?q=80&w=1889&auto=format&fit=crop&w=32&h=32", meta: "Artist" }, category: "Hand Drawn" },
+                { imgSrc: "https://images.unsplash.com/vector-1745355565181-cfb8ebde66c3?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQzfHR0aGR3Zk5QQ2N3fHxlbnwwfHx8fHw%3D", alt: "Hand Drawn Illustration", author: { name: "Artist Ten", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop&w=32&h=32", meta: "Artist" }, category: "Hand Drawn" },
+
+                // Icons
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1753405204802-5cfcad69455d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDd8RmtUdldqMFc1Ym98fGVufDB8fHx8fA%3D%3D", alt: "Icon", author: { name: "Artist One", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop&w=32&h=32", meta: "Designer" }, category: "Icons" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1757476843648-eaee2d730845?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDN8RmtUdldqMFc1Ym98fGVufDB8fHx8fA%3D%3D", alt: "Icon", author: { name: "Artist Two", avatar: "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?q=80&w=1974&auto=format&fit=crop&w=32&h=32", meta: "Designer" }, category: "Icons" },
+                { imgSrc: "https://images.unsplash.com/vector-1739804243236-9918c6eefc54?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDV8RmtUdldqMFc1Ym98fGVufDB8fHx8fA%3D%3D", alt: "Icon", author: { name: "Artist Three", avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961&auto=format&fit=crop&w=32&h=32", meta: "Designer" }, category: "Icons" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1752767770007-0617d19a3147?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDE1fEZrVHZXajBXNWJvfHxlbnwwfHx8fHw%3D", alt: "Icon", author: { name: "Artist Four", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1887&auto=format&fit=crop&w=32&h=32", meta: "Designer" }, category: "Icons" },
+                { imgSrc: "https://images.unsplash.com/vector-1758151882102-79a5675d7b16?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI0fEZrVHZXajBXNWJvfHxlbnwwfHx8fHw%3D", alt: "Icon", author: { name: "Artist Five", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&w=32&h=32", meta: "Designer" }, category: "Icons" },
+                { imgSrc: "https://images.unsplash.com/vector-1739804042232-2e8e8f974573?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI3fEZrVHZXajBXNWJvfHxlbnwwfHx8fHw%3D", alt: "Icon", author: { name: "Artist Six", avatar: "https://images.unsplash.com/photo-1557862921-37829c790f19?q=80&w=2071&auto=format&fit=crop&w=32&h=32", meta: "Designer" }, category: "Icons" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1752556314880-b7e878b02e9a?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI4fEZrVHZXajBXNWJvfHxlbnwwfHx8fHw%3D", alt: "Icon", author: { name: "Artist Seven", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop&w=32&h=32", meta: "Designer" }, category: "Icons" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1732277302515-39e0fc94a0fa?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQwfEZrVHZXajBXNWJvfHxlbnwwfHx8fHw%3D", alt: "Icon", author: { name: "Artist Eight", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1887&auto=format&fit=crop&w=32&h=32", meta: "Designer" }, category: "Icons" },
+                { imgSrc: "https://images.unsplash.com/vector-1738925114965-c4a63f5944e1?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDUwfEZrVHZXajBXNWJvfHxlbnwwfHx8fHw%3D", alt: "Icon", author: { name: "Artist Nine", avatar: "https://images.unsplash.com/photo-1548142813-c348350df52b?q=80&w=1889&auto=format&fit=crop&w=32&h=32", meta: "Designer" }, category: "Icons" },
+                { imgSrc: "https://images.unsplash.com/vector-1756774243068-0bd49156883d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQzfEZrVHZXajBXNWJvfHxlbnwwfHx8fHw%3D", alt: "Icon", author: { name: "Artist Ten", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop&w=32&h=32", meta: "Designer" }, category: "Icons" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1752036015934-4a886f5210a4?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDU3fEZrVHZXajBXNWJvfHxlbnwwfHx8fHw%3D", alt: "Icon", author: { name: "Artist Eleven", avatar: "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?q=80&w=1974&auto=format&fit=crop&w=32&h=32", meta: "Designer" }, category: "Icons" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1756805005169-6813d7acd63f?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDUyfEZrVHZXajBXNWJvfHxlbnwwfHx8fHw%3D", alt: "Icon", author: { name: "Artist Twelve", avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961&auto=format&fit=crop&w=32&h=32", meta: "Designer" }, category: "Icons" },
+
+                // Line Art
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1751732345667-03156cb41455?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDJ8ck5iajNOQkFZX3d8fGVufDB8fHx8fA%3D%3D", alt: "Line Art", author: { name: "Artist One", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop&w=32&h=32", meta: "Artist" }, category: "Line Art" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1733965253632-9486df4f66b2?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDF8ck5iajNOQkFZX3d8fGVufDB8fHx8fA%3D%3D", alt: "Line Art", author: { name: "Artist Two", avatar: "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?q=80&w=1974&auto=format&fit=crop&w=32&h=32", meta: "Artist" }, category: "Line Art" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1734699930484-eba24f1c573c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDR8ck5iajNOQkFZX3d8fGVufDB8fHx8fA%3D%3D", alt: "Line Art", author: { name: "Artist Three", avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961&auto=format&fit=crop&w=32&h=32", meta: "Artist" }, category: "Line Art" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1752394679159-d168be72940f?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDEwfHJOYmozTkJBWV93fHxlbnwwfHx8fHw%3D", alt: "Line Art", author: { name: "Artist Four", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1887&auto=format&fit=crop&w=32&h=32", meta: "Artist" }, category: "Line Art" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1738893493549-529b22cc4538?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDE2fHJOYmozTkJBWV93fHxlbnwwfHx8fHw%3D", alt: "Line Art", author: { name: "Artist Five", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&w=32&h=32", meta: "Artist" }, category: "Line Art" },
+                { imgSrc: "https://images.unsplash.com/vector-1753267290761-7f75da0025ab?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDIwfHJOYmozTkJBWV93fHxlbnwwfHx8fHw%3D", alt: "Line Art", author: { name: "Artist Six", avatar: "https://images.unsplash.com/photo-1557862921-37829c790f19?q=80&w=2071&auto=format&fit=crop&w=32&h=32", meta: "Artist" }, category: "Line Art" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1752249862403-52f677aa5f41?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDIzfHJOYmozTkJBWV93fHxlbnwwfHx8fHw%3D", alt: "Line Art", author: { name: "Artist Seven", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop&w=32&h=32", meta: "Artist" }, category: "Line Art" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1751547108998-59f8030b7e9f?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI5fHJOYmozTkJBWV93fHxlbnwwfHx8fHw%3D", alt: "Line Art", author: { name: "Artist Eight", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1887&auto=format&fit=crop&w=32&h=32", meta: "Artist" }, category: "Line Art" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1733814206662-5c8ad57ca6e5?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDM3fHJOYmozTkJBWV93fHxlbnwwfHx8fHw%3D", alt: "Line Art", author: { name: "Artist Nine", avatar: "https://images.unsplash.com/photo-1548142813-c348350df52b?q=80&w=1889&auto=format&fit=crop&w=32&h=32", meta: "Artist" }, category: "Line Art" },
+                { imgSrc: "https://images.unsplash.com/vector-1754331816671-107251714f6e?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDM0fHJOYmozTkJBWV93fHxlbnwwfHx8fHw%3D", alt: "Line Art", author: { name: "Artist Ten", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop&w=32&h=32", meta: "Artist" }, category: "Line Art" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1721131162465-42888ecb7cd8?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDM5fHJOYmozTkJBWV93fHxlbnwwfHx8fHw%3D", alt: "Line Art", author: { name: "Artist Eleven", avatar: "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?q=80&w=1974&auto=format&fit=crop&w=32&h=32", meta: "Artist" }, category: "Line Art" },
+
+                // Patterns
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1757964749967-961b454b8e71?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDV8dXBtbGVXWkM4M1l8fGVufDB8fHx8fA%3D%3D", alt: "Pattern", author: { name: "Artist One", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop&w=32&h=32", meta: "Illustrator" }, category: "Patterns" },
+                { imgSrc: "https://images.unsplash.com/vector-1753790421728-a1fa15e22bff?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDl8dXBtbGVXWkM4M1l8fGVufDB8fHx8fA%3D%3D", alt: "Pattern", author: { name: "Artist Two", avatar: "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?q=80&w=1974&auto=format&fit=crop&w=32&h=32", meta: "Illustrator" }, category: "Patterns" },
+                { imgSrc: "https://images.unsplash.com/vector-1759109220117-a787734b100c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDEzfHVwbWxlV1pDODNZfHxlbnwwfHx8fHw%3D", alt: "Pattern", author: { name: "Artist Three", avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961&auto=format&fit=crop&w=32&h=32", meta: "Illustrator" }, category: "Patterns" },
+                { imgSrc: "https://images.unsplash.com/vector-1753696520037-9d5e7671c979?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDIyfHVwbWxlV1pDODNZfHxlbnwwfHx8fHw%3D", alt: "Pattern", author: { name: "Artist Four", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1887&auto=format&fit=crop&w=32&h=32", meta: "Illustrator" }, category: "Patterns" },
+                { imgSrc: "https://images.unsplash.com/vector-1757680009601-2d57c069fb55?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI4fHVwbWxlV1pDODNZfHxlbnwwfHx8fHw%3D", alt: "Pattern", author: { name: "Artist Five", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&w=32&h=32", meta: "Illustrator" }, category: "Patterns" },
+                { imgSrc: "https://images.unsplash.com/vector-1747405360138-646f02b8d0f7?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI0fHVwbWxlV1pDODNZfHxlbnwwfHx8fHw%3D", alt: "Pattern", author: { name: "Artist Six", avatar: "https://images.unsplash.com/photo-1557862921-37829c790f19?q=80&w=2071&auto=format&fit=crop&w=32&h=32", meta: "Illustrator" }, category: "Patterns" },
+                { imgSrc: "https://images.unsplash.com/vector-1755833446039-78aec93da2fa?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI2fHVwbWxlV1pDODNZfHxlbnwwfHx8fHw%3D", alt: "Pattern", author: { name: "Artist Seven", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop&w=32&h=32", meta: "Illustrator" }, category: "Patterns" },
+                { imgSrc: "https://images.unsplash.com/vector-1758437191634-f8f507b4ae46?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDMxfHVwbWxlV1pDODNZfHxlbnwwfHx8fHw%3D", alt: "Pattern", author: { name: "Artist Eight", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1887&auto=format&fit=crop&w=32&h=32", meta: "Illustrator" }, category: "Patterns" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1726512296359-a17c6b47a553?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQxfHVwbWxlV1pDODNZfHxlbnwwfHx8fHw%3D", alt: "Pattern", author: { name: "Artist Nine", avatar: "https://images.unsplash.com/photo-1548142813-c348350df52b?q=80&w=1889&auto=format&fit=crop&w=32&h=32", meta: "Illustrator" }, category: "Patterns" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1711987634162-b5fadd4b6b7b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDUxfHVwbWxlV1pDODNZfHxlbnwwfHx8fHw%3D", alt: "Pattern", author: { name: "Artist Ten", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop&w=32&h=32", meta: "Illustrator" }, category: "Patterns" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1711987322674-f66b8086afa3?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDU2fHVwbWxlV1pDODNZfHxlbnwwfHx8fHw%3D", alt: "Pattern", author: { name: "Artist Eleven", avatar: "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?q=80&w=1974&auto=format&fit=crop&w=32&h=32", meta: "Illustrator" }, category: "Patterns" },
+                { imgSrc: "https://plus.unsplash.com/premium_vector-1751595669296-242375be2477?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDgwfHVwbWxlV1pDODNZfHxlbnwwfHx8fHw%3D", alt: "Pattern", author: { name: "Artist Twelve", avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961&auto=format&fit=crop&w=32&h=32", meta: "Illustrator" }, category: "Patterns" },
+
+            ];
+
+
+            const tabs = document.querySelectorAll('.tab');
+            const masonryGrid = document.getElementById('masonry-grid');
+            const footerLinks = document.querySelectorAll('.footer-category-link');
+
+            // --- FUNCTIONS ---
+            
+            const createPhotoCard = (photo) => {
+                // The new structure supports both mobile (Insta-style) and desktop (overlay) views.
+                return `
+                    <div class="photo-card">
+                        <!-- Mobile Header -->
+                        <div class="photo-header md:hidden">
+                            <img class="avatar" src="${photo.author.avatar}" alt="${photo.author.name}'s avatar" />
+                            <div class="author">
+                                <div class="name">${photo.author.name}</div>
+                                <div class="meta">${photo.author.meta}</div>
+                            </div>
+                        </div>
+
+                        <!-- Image (Common) -->
+                        <figure class="relative">
+                            <img class="rounded-lg md:rounded-lg w-full" src="${photo.imgSrc}" alt="${photo.alt}" loading="lazy" />
+                            
+                            <!-- Desktop Overlay -->
+                            <figcaption class="overlay rounded-lg hidden md:flex flex-col justify-between">
+                                <div class="actions top-right self-end">
+                                    <button class="control like-btn" aria-label="Like"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.1 8.64l-.1.1-.1-.1C10.14 6.8 7.1 7.24 5.9 9.4c-1 1.8-.4 4.13 1.2 5.4L12 18.7l4.9-3.9c1.6-1.27 2.2-3.6 1.2-5.4-1.2-2.16-4.24-2.6-6-.86z" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg></button>
+                                    <button class="control" aria-label="Add to collection"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="5" width="16" height="14" rx="2" stroke="#111" stroke-width="1.6"/><path d="M12 9v6" stroke="#111" stroke-width="1.6"/><path d="M9 12h6" stroke="#111" stroke-width="1.6"/></svg></button>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                     <div class="actions bottom-left flex items-center">
+                                        <img class="avatar" src="${photo.author.avatar}" alt="${photo.author.name}'s avatar" />
+                                        <div class="author ml-2">
+                                            <div class="name font-medium">${photo.author.name}</div>
+                                            <div class="meta text-xs text-gray-200">${photo.author.meta}</div>
+                                        </div>
+                                    </div>
+                                    <div class="actions bottom-right">
+                                        <button class="control download-btn" aria-label="Download"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v12" stroke="#111" stroke-width="1.6" stroke-linecap="round"/><path d="M7 11l5 5 5-5" stroke="#111" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                                    </div>
+                                </div>
+                            </figcaption>
+                        </figure>
+
+                        <!-- Mobile Actions -->
+                        <div class="photo-actions md:hidden">
+                            <div class="flex items-center">
+                                <button class="control like-btn" aria-label="Like"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.1 8.64l-.1.1-.1-.1C10.14 6.8 7.1 7.24 5.9 9.4c-1 1.8-.4 4.13 1.2 5.4L12 18.7l4.9-3.9c1.6-1.27 2.2-3.6 1.2-5.4-1.2-2.16-4.24-2.6-6-.86z" stroke-width="1.6" stroke-linejoin="round"/></svg></button>
+                                <button class="control" aria-label="Add to collection"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="5" width="16" height="14" rx="2" stroke-width="1.6"/><path d="M12 9v6" stroke-width="1.6"/><path d="M9 12h6" stroke-width="1.6"/></svg></button>
+                            </div>
+                            <button class="control download-btn" aria-label="Download"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke-width="1.6" stroke-linecap="round"/><polyline points="7 10 12 15 17 10" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><line x1="12" y1="15" x2="12" y2="3" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+                        </div>
+                    </div>
+                `;
+            };
+
+            const renderPhotos = (photos) => {
+                if (!masonryGrid) return;
+                masonryGrid.innerHTML = photos.map((photo, index) => {
+                    const cardHTML = createPhotoCard(photo);
+                    // Add animation delay
+                    const cardEl = document.createElement('div');
+                    cardEl.innerHTML = cardHTML.trim();
+                    const photoCard = cardEl.firstChild;
+                    photoCard.style.animationDelay = `${index * 50}ms`;
+                    return photoCard.outerHTML;
+                }).join('');
+
+                // Add event listeners for the new like buttons
+                document.querySelectorAll('.like-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation(); // Prevent card click event if any
+                        
+                        // Find the card and toggle 'liked' on all like buttons within it
+                        const card = btn.closest('.photo-card');
+                        if (card) {
+                            card.querySelectorAll('.like-btn').forEach(innerBtn => {
+                                innerBtn.classList.toggle('liked');
+                            });
+                        }
+                    });
+                });
+            };
+
+            const handleCategoryClick = (category, scrollToTop = true) => {
+                 // Update active tab style
+                document.querySelector('.tab.active').classList.remove('active');
+                const newActiveTab = document.querySelector(`.tab[data-category="${category}"]`);
+                if(newActiveTab) newActiveTab.classList.add('active');
+
+                // Filter photos based on the category
+                const photosToRender = category === 'Featured'
+                    ? illustrationData
+                    : illustrationData.filter(photo => photo.category === category);
+                
+                renderPhotos(photosToRender);
+                if (scrollToTop) {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            };
+
+
+            // --- EVENT LISTENERS & INITIALIZATION ---
+
+            // Tab functionality
+            tabs.forEach(tab => {
+                tab.addEventListener('click', (e) => handleCategoryClick(e.currentTarget.dataset.category));
+            });
+            
+             // Footer links functionality
+            footerLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const category = e.currentTarget.dataset.category;
+                    const correspondingTab = document.querySelector(`.tab[data-category="${category}"]`);
+                    if(correspondingTab) {
+                        handleCategoryClick(category);
+                    } else {
+                        // If category doesn't exist on this page, maybe navigate to index.html
+                        window.location.href = `index.html`; // Or a search page: `index.html?search=${category}`
+                    }
+                });
+            });
+
+
+             // Back to top button & Sidebar logo scroll to top
+            const toTopBtn = document.querySelector('.to-top');
+            const sidebarLogo = document.getElementById('sidebar-logo-link');
+
+            const scrollToTop = (event) => {
+                if (event) event.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+
+            if (toTopBtn) {
+                window.addEventListener('scroll', () => {
+                    if (window.pageYOffset > 300) {
+                        toTopBtn.classList.add('is-visible');
+                    } else {
+                        toTopBtn.classList.remove('is-visible');
+                    }
+                });
+                toTopBtn.addEventListener('click', scrollToTop);
+            }
+            
+             // Mobile nav toggle
+            const navToggle = document.querySelector('.nav-toggle');
+            const mobileNav = document.getElementById('mobile-nav');
+            if(navToggle && mobileNav) {
+                navToggle.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    mobileNav.classList.toggle('is-open');
+                });
+                mobileNav.addEventListener('click', () => {
+                    mobileNav.classList.remove('is-open');
+                });
+                mobileNav.querySelector('.mobile-nav-menu').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                });
+            }
+
+            // --- THEME TOGGLE ---
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const sunIcon = document.getElementById('sun-icon');
+            const moonIcon = document.getElementById('moon-icon');
+
+            // Function to apply the theme
+            const applyTheme = (theme) => {
+                if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                    sunIcon.classList.remove('hidden');
+                    moonIcon.classList.add('hidden');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    sunIcon.classList.add('hidden');
+                    moonIcon.classList.remove('hidden');
+                }
+            };
+
+            // Check for saved theme in localStorage
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            applyTheme(savedTheme);
+
+            // Event listener for the toggle button
+            themeToggleBtn.addEventListener('click', () => {
+                const currentTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                localStorage.setItem('theme', newTheme);
+                applyTheme(newTheme);
+            });
+            
+             // Set footer year
+            const yearSpan = document.getElementById('footer-year');
+            if (yearSpan) {
+                yearSpan.textContent = new Date().getFullYear();
+            }
+
+            // Initial render of all illustrations for the "Featured" tab on page load
+            renderPhotos(illustrationData);
+        });
+    </script>
+</body>
+</html>

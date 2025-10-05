@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Sign Up - Unsplash</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000;
+        }
+        .form-container {
+            position: relative;
+            width: 800px;
+            height: 580px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .form-section {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            top: 0;
+            transition: all 0.6s ease-in-out;
+        }
+        .login-section {
+            left: 0;
+            z-index: 2;
+        }
+        .signup-section {
+            left: 0;
+            opacity: 0;
+            z-index: 1;
+        }
+        .form-container.active .login-section {
+            transform: translateX(100%);
+            opacity: 0;
+            z-index: 1;
+        }
+        .form-container.active .signup-section {
+            transform: translateX(100%);
+            opacity: 1;
+            z-index: 5;
+            animation: show 0.6s;
+        }
+        @keyframes show {
+            0%, 49.99% {
+                opacity: 0;
+                z-index: 1;
+            }
+            50%, 100% {
+                opacity: 1;
+                z-index: 5;
+            }
+        }
+        .overlay-container {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            transition: transform 0.6s ease-in-out;
+            z-index: 100;
+        }
+        .form-container.active .overlay-container {
+            transform: translateX(-100%);
+        }
+        .overlay {
+            background: #ffffff; /* Solid White */
+            position: relative;
+            left: -100%;
+            height: 100%;
+            width: 200%;
+            transform: translateX(0);
+            transition: transform 0.6s ease-in-out;
+        }
+        .form-container.active .overlay {
+            transform: translateX(50%);
+        }
+        .overlay-panel {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0 40px;
+            text-align: center;
+            top: 0;
+            height: 100%;
+            width: 50%;
+            transform: translateX(0);
+            transition: transform 0.6s ease-in-out;
+        }
+        .overlay-left {
+            transform: translateX(-20%);
+        }
+        .form-container.active .overlay-left {
+            transform: translateX(0);
+        }
+        .overlay-right {
+            right: 0;
+            transform: translateX(0);
+        }
+        .form-container.active .overlay-right {
+            transform: translateX(20%);
+        }
+        
+        /* --- UPDATED RESPONSIVENESS WITH ANIMATION --- */
+        @media (max-width: 820px) {
+            .form-container {
+                width: 90%;
+                max-width: 450px;
+                /* Set a fixed height to contain the stacked forms */
+                height: 620px; 
+                padding: 0;
+                overflow: hidden;
+                /* This is the key for positioning the forms inside */
+                position: relative; 
+            }
+            
+            /* Hide the original overlay panel on mobile */
+            .overlay-container {
+                display: none;
+            }
+            
+            /* Position both forms on top of each other */
+            .form-section {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transform: none !important;
+                animation: none !important;
+                /* Add a smooth fade transition */
+                transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+            }
+            
+            .login-section form, .signup-section form {
+                 padding: 0 1.5rem; /* 24px */
+            }
+
+            /* --- Animation Logic --- */
+            /* By default, login is visible and signup is hidden */
+            .login-section {
+                opacity: 1;
+                visibility: visible;
+                z-index: 2;
+            }
+
+            .signup-section {
+                opacity: 0;
+                visibility: hidden;
+                z-index: 1;
+            }
+
+            /* When container is active, fade out login and fade in signup */
+            .form-container.active .login-section {
+                opacity: 0;
+                visibility: hidden;
+                z-index: 1;
+            }
+
+            .form-container.active .signup-section {
+                opacity: 1;
+                visibility: visible;
+                z-index: 2;
+            }
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen py-10 px-4">
+    <a href="index.html" class="block mb-6">
+        <img class="h-10 w-auto" src="https://www.svgrepo.com/show/315538/unsplash.svg" alt="Unsplash Logo" style="filter: brightness(0) invert(1);" />
+    </a>
+    <div class="form-container bg-white/70 rounded-lg shadow-2xl" id="container">
+        <div class="form-section signup-section flex items-center justify-center">
+            <form id="signup-form" action="#" class="w-full px-12">
+                <h1 class="text-3xl font-bold text-center mb-6 text-gray-800">Create Account</h1>
+                <input type="email" placeholder="Email" class="w-full p-3 mb-4 bg-gray-100 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                <input type="password" placeholder="Create password" class="w-full p-3 mb-4 bg-gray-100 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                <input type="password" placeholder="Confirm password" class="w-full p-3 mb-6 bg-gray-100 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                <button type="submit" class="w-full bg-black text-white font-bold py-3 rounded-md hover:bg-gray-800 transition-colors">Sign Up</button>
+                <p class="text-center mt-4 text-sm text-gray-600">Already have an account? <a href="#" id="login" class="font-medium text-black hover:underline">Login</a></p>
+                <div class="inline-flex items-center justify-center w-full">
+                    <hr class="w-full h-px my-6 bg-gray-300 border-0">
+                    <span class="absolute px-3 font-medium text-gray-500 -translate-x-1/2 bg-white/70 left-1/2">Or</span>
+                </div>
+                 <button class="w-full flex items-center justify-center py-2.5 px-4 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors mb-3">
+                    <svg class="w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 8 19">
+                        <path fill-rule="evenodd" d="M6.135 3H8V0H6.135a4.147 4.147 0 0 0-4.142 4.142V6H0v3h2v9.938h3V9h2.021l.592-3H5V3.591A.6.6 0 0 1 5.592 3h.543Z" clip-rule="evenodd"/>
+                    </svg>
+                    Sign up with Facebook
+                </button>
+                <button class="w-full flex items-center justify-center py-2.5 px-4 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors">
+                    <svg class="w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 19">
+                        <path fill-rule="evenodd" d="M8.842 18.083a8.8 8.8 0 0 1-8.65-8.948 8.841 8.841 0 0 1 8.8-8.652h.153a8.464 8.464 0 0 1 5.7 2.257l-2.193 2.038A5.27 5.27 0 0 0 9.09 3.4a5.882 5.882 0 0 0-.2 11.76h.124a5.091 5.091 0 0 0 5.248-4.057L14.3 11H9V8h8.34c.066.543.095 1.09.088 1.636-.086 5.053-3.463 8.449-8.4 8.449l-.186-.002Z" clip-rule="evenodd"/>
+                    </svg>
+                    Sign up with Google
+                </button>
+            </form>
+        </div>
+        <div class="form-section login-section flex items-center justify-center">
+            <form id="login-form" action="#" class="w-full px-12">
+                <h1 class="text-3xl font-bold text-center mb-6 text-gray-800">Login</h1>
+                <input type="email" placeholder="Email" class="w-full p-3 mb-4 bg-gray-100 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                <input type="password" placeholder="Password" class="w-full p-3 mb-4 bg-gray-100 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                <a href="#" class="text-sm text-black hover:underline mb-6 block text-center">Forgot password?</a>
+                <button type="submit" class="w-full bg-black text-white font-bold py-3 rounded-md hover:bg-gray-800 transition-colors">Login</button>
+                <p class="text-center mt-4 text-sm text-gray-600">Don't have an account? <a href="#" id="signup" class="font-medium text-black hover:underline">Signup</a></p>
+                 <div class="inline-flex items-center justify-center w-full">
+                    <hr class="w-full h-px my-6 bg-gray-300 border-0">
+                    <span class="absolute px-3 font-medium text-gray-500 -translate-x-1/2 bg-white/70 left-1/2">Or</span>
+                </div>
+                <button class="w-full flex items-center justify-center py-2.5 px-4 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors mb-3">
+                    <svg class="w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 8 19">
+                        <path fill-rule="evenodd" d="M6.135 3H8V0H6.135a4.147 4.147 0 0 0-4.142 4.142V6H0v3h2v9.938h3V9h2.021l.592-3H5V3.591A.6.6 0 0 1 5.592 3h.543Z" clip-rule="evenodd"/>
+                    </svg>
+                    Login with Facebook
+                </button>
+                <button class="w-full flex items-center justify-center py-2.5 px-4 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors">
+                    <svg class="w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 19">
+                        <path fill-rule="evenodd" d="M8.842 18.083a8.8 8.8 0 0 1-8.65-8.948 8.841 8.841 0 0 1 8.8-8.652h.153a8.464 8.464 0 0 1 5.7 2.257l-2.193 2.038A5.27 5.27 0 0 0 9.09 3.4a5.882 5.882 0 0 0-.2 11.76h.124a5.091 5.091 0 0 0 5.248-4.057L14.3 11H9V8h8.34c.066.543.095 1.09.088 1.636-.086 5.053-3.463 8.449-8.4 8.449l-.186-.002Z" clip-rule="evenodd"/>
+                    </svg>
+                    Login with Google
+                </button>
+            </form>
+        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left text-black">
+                    <h1 class="text-3xl font-bold mb-4">Already a Creator?</h1>
+                    <p class="mb-6 px-4">Login to access your profile, stats, and contribute to the community.</p>
+                    <button id="signInButton" class="bg-transparent border-2 border-black text-black font-bold py-2 px-6 rounded-full hover:bg-black hover:text-white transition-colors">Login</button>
+                </div>
+                <div class="overlay-panel overlay-right text-black">
+                    <h1 class="text-3xl font-bold mb-4">Join the Community</h1>
+                    <p class="mb-6 px-4">Sign up to start sharing your work with the world's most generous community of creators.</p>
+                    <button id="signUpButton" class="bg-transparent border-2 border-black text-black font-bold py-2 px-6 rounded-full hover:bg-black hover:text-white transition-colors">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const container = document.getElementById('container');
+        const signUpButton = document.getElementById('signUpButton');
+        const signInButton = document.getElementById('signInButton');
+        const loginLink = document.getElementById('login');
+        const signupLink = document.getElementById('signup');
+        const loginForm = document.getElementById('login-form');
+        const signupForm = document.getElementById('signup-form');
+
+        signUpButton.addEventListener('click', () => {
+            container.classList.add('active');
+        });
+
+        signInButton.addEventListener('click', () => {
+            container.classList.remove('active');
+        });
+        
+        loginLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            container.classList.remove('active');
+        });
+        
+        signupLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            container.classList.add('active');
+        });
+
+        if(loginForm) {
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault(); // Prevent actual form submission
+                window.location.href = 'index.html';
+            });
+        }
+        
+        if(signupForm) {
+            signupForm.addEventListener('submit', function(e) {
+                e.preventDefault(); // Prevent actual form submission
+                window.location.href = 'index.html';
+            });
+        }
+    });
+</script>
+</body>
+</html>
